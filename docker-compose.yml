@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Jenkins CI/CD Server
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    networks:
+      - grafana-mysql-network
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+    restart: unless-stopped
+
+  # Merchant Backend API (Deployed by Jenkins)
+  # This will be managed by Jenkins pipeline
+  # merchant-backend:
+  #   image: merchant-summary-backend:latest
+  #   container_name: merchant-backend
+  #   networks:
+  #     - grafana-mysql-network
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - COUCHBASE_HOST=host.docker.internal
+  #     - COUCHBASE_USERNAME=admin
+  #     - COUCHBASE_PASSWORD=T1ku$H1t4m
+  #   restart: unless-stopped
+
+networks:
+  grafana-mysql-network:
+    external: true
+
+volumes:
+  jenkins_home:
+    driver: local
