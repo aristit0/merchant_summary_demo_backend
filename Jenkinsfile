@@ -23,7 +23,7 @@ pipeline {
         stage('Cleanup Workspace') {
             steps {
                 echo '🧹 Cleaning up workspace...'
-                cleanWs()
+                deleteDir()
             }
         }
         
