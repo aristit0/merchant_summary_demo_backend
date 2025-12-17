@@ -16,7 +16,7 @@ import (
 // ================================================================
 
 const (
-	CouchbaseHost       = "localhost"
+	CouchbaseHost       = "db"
 	CouchbaseUsername   = "admin"
 	CouchbasePassword   = "T1ku$H1t4m"
 	CouchbaseBucket     = "ms_demo"
