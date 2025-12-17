@@ -168,6 +168,24 @@ EOF
         }
     }
 
+
+        /* ===============================
+           ✅ CLEANUP BACKEND IMAGE
+           =============================== */
+        stage('Cleanup Old Backend Images') {
+            steps {
+                echo '🧹 Cleanup old backend Docker images (keep latest only)...'
+                sh '''
+                    docker images ${DOCKER_IMAGE} --format "{{.Repository}}:{{.Tag}}" \
+                    | grep -v latest \
+                    | xargs -r docker rmi || true
+                '''
+            }
+        }
+    }
+
+
+
     post {
         success {
             echo '✅ CI/CD Pipeline completed successfully!'
